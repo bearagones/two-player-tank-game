@@ -11,4 +11,9 @@ public class SpeedPowerUp extends PowerUp {
             tank.speed = 4;
         }
     }
+
+    @Override
+    public void getImage() {
+
+    }
 }

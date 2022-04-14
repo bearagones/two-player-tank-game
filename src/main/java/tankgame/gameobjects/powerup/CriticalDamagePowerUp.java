@@ -11,4 +11,9 @@ public class CriticalDamagePowerUp extends PowerUp {
             tank.damage = 2;
         }
     }
+
+    @Override
+    public void getImage() {
+
+    }
 }

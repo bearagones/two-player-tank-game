@@ -11,4 +11,9 @@ public class HealthPowerUp extends PowerUp {
             tank.health = 20;
         }
     }
+
+    @Override
+    public void getImage() {
+
+    }
 }

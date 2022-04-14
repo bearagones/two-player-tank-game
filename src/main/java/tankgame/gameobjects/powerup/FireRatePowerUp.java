@@ -11,4 +11,9 @@ public class FireRatePowerUp extends PowerUp {
             tank.fireRate = 4;
         }
     }
+
+    @Override
+    public void getImage() {
+
+    }
 }
