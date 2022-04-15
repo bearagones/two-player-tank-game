@@ -1,12 +1,22 @@
 package tankgame.gameobjects;
 
-public abstract class Player {
+import java.awt.image.BufferedImage;
+
+public abstract class Player extends GameObject {
 
     protected boolean upPressed;
     protected boolean downPressed;
     protected boolean rightPressed;
     protected boolean leftPressed;
     protected boolean shootPressed;
+
+    public Player(int x, int y, BufferedImage image) {
+        super(x, y, image);
+    }
+
+    @Override
+    public void detectCollision(Collidable object) {
+    }
 
     public void toggleUpPressed() {
         this.upPressed = true;
