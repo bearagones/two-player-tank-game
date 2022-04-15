@@ -1,6 +1,5 @@
 package tankgame.gamescreens;
 
-
 import tankgame.Launcher;
 
 import javax.imageio.ImageIO;
