@@ -21,7 +21,7 @@ The jar folder is to be used to store the built jar of your term-project.
 
 `THIS FOLDER CAN NOT BE DELETED OR MOVED`
 
-# Required Information when Submitting Tank Game
+# Required Information when Submitting tankgame.gameobjects.Tank Game
 
 ## Version of Java Used:
 
@@ -37,10 +37,10 @@ The jar folder is to be used to store the built jar of your term-project.
 
 |               | Player 1 | Player 2 |
 |---------------|----------|----------|
-|  Forward      |          |          |
-|  Backward     |          |          |
-|  Rotate left  |          |          |
-|  Rotate Right |          |          |
-|  Shoot        |          |          |
+|  Forward      |     UP     |     W     |
+|  Backward     |     DOWN     |     S     |
+|  Rotate left  |     LEFT     |     A     |
+|  Rotate Right |     RIGHT     |     D     |
+|  Shoot        |     ENTER     |     CTRL     |
 
 <!-- you may add more controls if you need to. -->
