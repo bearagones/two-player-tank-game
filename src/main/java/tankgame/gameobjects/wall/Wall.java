@@ -8,20 +8,11 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public abstract class Wall extends GameObject {
-    private int x;
-    private int y;
-    private BufferedImage image;
-    private Rectangle hitBox;
+
     private boolean collided;
 
     public Wall(int x, int y, BufferedImage image) {
         super(x, y, image);
-        this.hitBox = new Rectangle(x, y, this.image.getWidth(), this.image.getHeight());
-    }
-
-    @Override
-    public Rectangle getHitBox() {
-        return hitBox;
     }
 
     @Override
@@ -37,6 +28,16 @@ public abstract class Wall extends GameObject {
                 collided = true;
             }
         }
+    }
+
+    @Override
+    public boolean hasCollided() {
+        return collided;
+    }
+
+    @Override
+    public Rectangle getHitBox() {
+        return hitBox.getBounds();
     }
 
     public abstract void destroyWall(boolean collided);
