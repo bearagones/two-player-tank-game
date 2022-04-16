@@ -1,6 +1,6 @@
 package tankgame.gamescreens;
 
-import tankgame.Launcher;
+import tankgame.GameLauncher;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -13,9 +13,9 @@ public class EndGamePanel extends JPanel {
     private BufferedImage menuBackground;
     private JButton start;
     private JButton exit;
-    private Launcher lf;
+    private GameLauncher lf;
 
-    public EndGamePanel(Launcher lf) {
+    public EndGamePanel(GameLauncher lf) {
         this.lf = lf;
         try {
             menuBackground = ImageIO.read(this.getClass().getClassLoader().getResource("title.png"));
