@@ -13,11 +13,12 @@ public abstract class GameObject implements Collidable {
         this.x = x;
         this.y = y;
         this.image = image;
-        this.hitBox = new Rectangle(x, y, this.image.getWidth(), this.image.getHeight());
+        this.hitBox = new Rectangle(x, y, image.getWidth(), image.getHeight());
     }
 
     public abstract void drawImage(Graphics g);
 
     public abstract void detectCollision(Collidable object);
 
+    public abstract boolean hasCollided();
 }

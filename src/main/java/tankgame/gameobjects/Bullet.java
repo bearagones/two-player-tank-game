@@ -1,13 +1,12 @@
 package tankgame.gameobjects;
 
+import tankgame.gameobjects.wall.Wall;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class Bullet extends GameObject {
-    private int x;
-    private int y;
-    private BufferedImage image;
-    private Rectangle hitBox;
+
     private boolean collided;
 
     public Bullet(int x, int y, BufferedImage image) {
@@ -22,7 +21,7 @@ public class Bullet extends GameObject {
 
     @Override
     public void detectCollision(Collidable object) {
-        if (object instanceof Bullet) {
+        if (object instanceof Tank || object instanceof Wall) {
             if (this.getHitBox().intersects(object.getHitBox())) {
                 collided = true;
             }
@@ -30,7 +29,17 @@ public class Bullet extends GameObject {
     }
 
     @Override
+    public boolean hasCollided() {
+        return collided;
+    }
+
+    @Override
     public Rectangle getHitBox() {
-        return hitBox;
+        return hitBox.getBounds();
+    }
+
+    @Override
+    public void giveBuff(Tank tank) {
+        tank.health -= 5;
     }
 }

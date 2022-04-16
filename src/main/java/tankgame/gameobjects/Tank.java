@@ -21,9 +21,6 @@ public class Tank extends Player {
     private final int R = 2;
     private final float ROTATIONSPEED = 3.0f;
 
-    //public BufferedImage img;
-    //public Rectangle hitBox;
-
     public int armor;
     public int damage;
     public int fireRate;
@@ -142,7 +139,16 @@ public class Tank extends Player {
     }
 
     @Override
+    public boolean hasCollided() {
+        return collided;
+    }
+
+    @Override
     public Rectangle getHitBox() {
         return hitBox.getBounds();
+    }
+
+    @Override
+    public void giveBuff(Tank tank) {
     }
 }

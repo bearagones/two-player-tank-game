@@ -14,10 +14,6 @@ public abstract class Player extends GameObject {
         super(x, y, image);
     }
 
-    @Override
-    public void detectCollision(Collidable object) {
-    }
-
     public void toggleUpPressed() {
         this.upPressed = true;
     }
