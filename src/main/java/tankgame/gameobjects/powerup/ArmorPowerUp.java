@@ -9,11 +9,13 @@ public class ArmorPowerUp extends PowerUp {
         super(x, y, image);
     }
 
-    // A tank can have a max of 2x armor
+    // A tank can have a max of 1x armor
     @Override
     public void giveBuff(Tank tank) {
-        if ((tank.armor *= 2) >= 2) {
-            tank.armor = 2;
+        if ((tank.armor *= 2) >= 1) {
+            tank.armor = 1;
+        } else {
+            tank.armor += 1;
         }
     }
 
