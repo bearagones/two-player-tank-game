@@ -3,7 +3,6 @@ package tankgame.gameobjects;
 import tankgame.GameConstants;
 import tankgame.GameLoader;
 import tankgame.gameobjects.powerup.PowerUp;
-import tankgame.gameobjects.wall.Wall;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;
@@ -23,14 +22,13 @@ public class Tank extends Player implements Moveable {
     private int vy;
     private int angle;
 
-    private final int R = 1;
     private final float ROTATIONSPEED = 2.0f;
 
-    public int armor, damage, fireRate, health, speed, lives;
+    public int armor, health, speed, lives;
 
-    public boolean isLoser;
+    public boolean hasDied;
 
-    private ArrayList<Bullet> bullets = new ArrayList<>();
+    private final ArrayList<Bullet> bullets = new ArrayList<>();
 
     public Tank(int x, int y, int vx, int vy, int angle, BufferedImage image) {
         super(x, y, image);
@@ -40,12 +38,9 @@ public class Tank extends Player implements Moveable {
         this.hitBox = new Rectangle(x, y, this.image.getWidth(), this.image.getHeight());
 
         this.armor = 0;
-        this.damage = 1;
-        this.fireRate = 1;
         this.health = 30;
-        this.lives = 3;
         this.speed = 1;
-        this.isLoser = false;
+        this.lives = 3;
     }
 
     public int getX() {
@@ -73,8 +68,8 @@ public class Tank extends Player implements Moveable {
     }
 
     private void moveForwards() {
-        vx = (int) Math.round(R * Math.cos(Math.toRadians(angle)));
-        vy = (int) Math.round(R * Math.sin(Math.toRadians(angle)));
+        vx = (int) Math.round(speed * Math.cos(Math.toRadians(angle)));
+        vy = (int) Math.round(speed * Math.sin(Math.toRadians(angle)));
         x += vx;
         y += vy;
         checkBorder();
@@ -82,8 +77,8 @@ public class Tank extends Player implements Moveable {
     }
 
     private void moveBackwards() {
-        vx = (int) Math.round(R * Math.cos(Math.toRadians(angle)));
-        vy = (int) Math.round(R * Math.sin(Math.toRadians(angle)));
+        vx = (int) Math.round(speed * Math.cos(Math.toRadians(angle)));
+        vy = (int) Math.round(speed * Math.sin(Math.toRadians(angle)));
         x -= vx;
         y -= vy;
         checkBorder();
@@ -96,22 +91,19 @@ public class Tank extends Player implements Moveable {
         shootPressed = false;
     }
 
-    private void hit() {
-        if (this.health - 10 <= 0) {
+    private void hit(int damage) {
+        if (this.health - damage <= 0) {
             this.health = 0;
             death();
         } else {
-            this.health -= 10;
+            this.health -= damage;
         }
     }
 
     private void death() {
         this.lives -= 1;
-        if (this.lives == 0) {
-            this.isLoser = true;
-        } else {
-            this.health = 30;
-        }
+        this.health = 30;
+        this.hasDied = true;
     }
 
     @Override
@@ -177,11 +169,16 @@ public class Tank extends Player implements Moveable {
     public void detectCollision(Collidable object) {
         if (this.getHitBox().intersects(object.getHitBox())) {
             if (object instanceof Bullet) {
-                this.hit();
+                if (this.armor == 1) {
+                    this.hit(5);
+                } else {
+                    this.hit(10);
+                }
                 collided = true;
             }
 
             if (object instanceof PowerUp) {
+                ((PowerUp) object).giveBuff(this);
                 collided = true;
             }
 
@@ -190,6 +187,7 @@ public class Tank extends Player implements Moveable {
             } else if (this.downPressed) {
                 this.moveForwards();
             }
+
         }
         this.bullets.forEach(bullet -> {
             bullet.detectCollision(object);
