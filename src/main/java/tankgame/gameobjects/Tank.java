@@ -2,6 +2,7 @@ package tankgame.gameobjects;
 
 import tankgame.GameConstants;
 import tankgame.GameLoader;
+import tankgame.gameobjects.powerup.PowerUp;
 import tankgame.gameobjects.wall.Wall;
 
 import java.awt.*;
@@ -122,8 +123,6 @@ public class Tank extends Player implements Moveable {
         for (Bullet b : bullets) {
             b.drawImage(g);
         }
-        g2d.setColor(Color.BLUE);
-        g2d.drawRect(x, y, this.image.getWidth(), this.image.getHeight());
     }
 
     @Override
@@ -176,11 +175,16 @@ public class Tank extends Player implements Moveable {
 
     @Override
     public void detectCollision(Collidable object) {
-        if ((this.getHitBox().intersects(object.getHitBox()))) {
+        if (this.getHitBox().intersects(object.getHitBox())) {
             if (object instanceof Bullet) {
                 this.hit();
                 collided = true;
             }
+
+            if (object instanceof PowerUp) {
+                collided = true;
+            }
+
             if (this.upPressed) {
                 this.moveBackwards();
             } else if (this.downPressed) {
