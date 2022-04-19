@@ -15,14 +15,6 @@ public abstract class PowerUp extends GameObject {
         super(x, y, image);
     }
 
-    @Override
-    public void detectCollision(Collidable object) {
-        if (this.getHitBox().intersects(object.getHitBox())) {
-            boolean collided = true;
-            this.giveBuff(tank);
-        }
-    }
-
     public abstract void giveBuff(Tank tank);
 
 }
