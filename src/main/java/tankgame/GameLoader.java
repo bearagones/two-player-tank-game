@@ -66,6 +66,10 @@ public class GameLoader extends JPanel implements Runnable {
                 this.handleCollision(tank1);
                 this.handleCollision(tank2);
 
+                if (this.tank1.hasDied) {
+
+                }
+
                 if (tank1.lives == 0 || tank2.lives == 0) {
                     gameOver = true;
                 }
@@ -124,8 +128,6 @@ public class GameLoader extends JPanel implements Runnable {
             gameObjects.put("breakable wall", read(Objects.requireNonNull(GameLoader.class.getClassLoader().getResource("BreakableWall.png"))));
             gameObjects.put("unbreakable wall", read(Objects.requireNonNull(GameLoader.class.getClassLoader().getResource("UnbreakableWall.png"))));
             gameObjects.put("armor powerup", read(Objects.requireNonNull(GameLoader.class.getClassLoader().getResource("PowerUpSprites/Armor.gif"))));
-            gameObjects.put("critical damage powerup", read(Objects.requireNonNull(GameLoader.class.getClassLoader().getResource("PowerUpSprites/CriticalDamage.gif"))));
-            gameObjects.put("fire rate powerup", read(Objects.requireNonNull(GameLoader.class.getClassLoader().getResource("PowerUpSprites/FireRate.gif"))));
             gameObjects.put("health powerup", read(Objects.requireNonNull(GameLoader.class.getClassLoader().getResource("PowerUpSprites/Health.png"))));
             gameObjects.put("speed powerup", read(Objects.requireNonNull(GameLoader.class.getClassLoader().getResource("PowerUpSprites/Speed.png"))));
 
@@ -158,15 +160,9 @@ public class GameLoader extends JPanel implements Runnable {
                             this.powerups.add(new ArmorPowerUp(currentColumn * 32, currentRow * 32, gameObjects.get("armor powerup")));
                             break;
                         case "4":
-                            this.powerups.add(new CriticalDamagePowerUp(currentColumn * 32, currentRow * 32, gameObjects.get("critical damage powerup")));
-                            break;
-                        case "5":
-                            this.powerups.add(new FireRatePowerUp(currentColumn * 32, currentRow * 32, gameObjects.get("fire rate powerup")));
-                            break;
-                        case "6":
                             this.powerups.add(new HealthPowerUp(currentColumn * 32, currentRow * 32, gameObjects.get("health powerup")));
                             break;
-                        case "7":
+                        case "5":
                             this.powerups.add(new SpeedPowerUp(currentColumn * 32, currentRow * 32, gameObjects.get("speed powerup")));
                             break;
                     }
@@ -178,9 +174,15 @@ public class GameLoader extends JPanel implements Runnable {
             ex.printStackTrace();
         }
 
-        //Spawning the tanks
+        //Initial spawning of the tanks
         tank1 = new Tank(200, 200, 0, 0, 90, t1img);
         tank2 = new Tank(GameConstants.GAME_SCREEN_WIDTH - 100, GameConstants.GAME_SCREEN_HEIGHT - 100, 0, 0, 270, t2img);
+
+        if (tank1.hasDied) {
+            tank1 = new Tank(200, 200, 0, 0, 90, t1img);
+        } else if (tank2.hasDied) {
+            tank2 = new Tank(GameConstants.GAME_SCREEN_WIDTH - 100, GameConstants.GAME_SCREEN_HEIGHT - 100, 0, 0, 270, t2img);
+        }
 
         //Setting the game controls for the tanks
         GameControl tankControl1 = new GameControl(tank1, KeyEvent.VK_UP, KeyEvent.VK_DOWN, KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT, KeyEvent.VK_ENTER);
@@ -228,7 +230,6 @@ public class GameLoader extends JPanel implements Runnable {
             object.detectCollision(powerup);
             powerup.detectCollision(object);
             if (powerup.hasCollided()) {
-                powerup.giveBuff((Tank) object);
                 powerUpIterator.remove();
             }
         }
@@ -268,9 +269,9 @@ public class GameLoader extends JPanel implements Runnable {
         g2.fillRect(0, GameConstants.GAME_SCREEN_HEIGHT - 95, GameConstants.GAME_SCREEN_WIDTH, 85);
 
         //Creating the health bars
-        if (tank1.health == 20) {
+        if (tank1.health <= 20  && tank1.health > 10) {
             g2.setColor(Color.ORANGE);
-        } else if (tank1.health == 10) {
+        } else if (tank1.health <= 10 && tank1.health > 1) {
             g2.setColor(Color.RED);
         } else {
             g2.setColor(Color.GREEN);
