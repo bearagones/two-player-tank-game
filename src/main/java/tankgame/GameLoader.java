@@ -5,22 +5,18 @@
  */
 package tankgame;
 
-import tankgame.gameobjects.Bullet;
 import tankgame.gameobjects.Collidable;
-import tankgame.gameobjects.GameObject;
 import tankgame.gameobjects.Tank;
 import tankgame.gameobjects.powerup.*;
 import tankgame.gameobjects.wall.BreakableWall;
 import tankgame.gameobjects.wall.UnbreakableWall;
 import tankgame.gameobjects.wall.Wall;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -41,12 +37,12 @@ public class GameLoader extends JPanel implements Runnable {
     public static BufferedImage bullet;
     private Tank tank1;
     private Tank tank2;
-    private GameLauncher lf;
+    private final GameLauncher lf;
     private BufferedImage background = null;
 
-    ArrayList<Wall> walls;
-    ArrayList<PowerUp> powerups;
-    HashMap<String, BufferedImage> gameObjects;
+    private ArrayList<Wall> walls;
+    private ArrayList<PowerUp> powerups;
+    private HashMap<String, BufferedImage> gameObjects;
 
     public GameLoader(GameLauncher lf) {
         this.lf = lf;
@@ -67,7 +63,13 @@ public class GameLoader extends JPanel implements Runnable {
                 this.handleCollision(tank2);
 
                 if (this.tank1.hasDied) {
+                    tank1.setX(50);
+                    tank1.setY(50);
+                }
 
+                if (this.tank2.hasDied) {
+                    tank2.setX(GameConstants.GAME_SCREEN_WIDTH - 100);
+                    tank2.setY(GameConstants.GAME_SCREEN_HEIGHT - 100);
                 }
 
                 if (tank1.lives == 0 || tank2.lives == 0) {
@@ -131,7 +133,7 @@ public class GameLoader extends JPanel implements Runnable {
             gameObjects.put("health powerup", read(Objects.requireNonNull(GameLoader.class.getClassLoader().getResource("PowerUpSprites/Health.png"))));
             gameObjects.put("speed powerup", read(Objects.requireNonNull(GameLoader.class.getClassLoader().getResource("PowerUpSprites/Speed.png"))));
 
-            InputStreamReader isr = new InputStreamReader(GameLoader.class.getClassLoader().getResourceAsStream("maps/map1.csv"));
+            InputStreamReader isr = new InputStreamReader(Objects.requireNonNull(GameLoader.class.getClassLoader().getResourceAsStream("maps/map1.csv")));
             BufferedReader mapReader = new BufferedReader(isr);
             String row = mapReader.readLine();
             if (row == null) {
@@ -174,15 +176,9 @@ public class GameLoader extends JPanel implements Runnable {
             ex.printStackTrace();
         }
 
-        //Initial spawning of the tanks
-        tank1 = new Tank(200, 200, 0, 0, 90, t1img);
-        tank2 = new Tank(GameConstants.GAME_SCREEN_WIDTH - 100, GameConstants.GAME_SCREEN_HEIGHT - 100, 0, 0, 270, t2img);
-
-        if (tank1.hasDied) {
-            tank1 = new Tank(200, 200, 0, 0, 90, t1img);
-        } else if (tank2.hasDied) {
-            tank2 = new Tank(GameConstants.GAME_SCREEN_WIDTH - 100, GameConstants.GAME_SCREEN_HEIGHT - 100, 0, 0, 270, t2img);
-        }
+        //Spawning of the tanks
+        this.tank1 = new Tank(200, 200, 0, 0, 90, t1img);
+        this.tank2 = new Tank(GameConstants.GAME_SCREEN_WIDTH - 100, GameConstants.GAME_SCREEN_HEIGHT - 100, 0, 0, 270, t2img);
 
         //Setting the game controls for the tanks
         GameControl tankControl1 = new GameControl(tank1, KeyEvent.VK_UP, KeyEvent.VK_DOWN, KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT, KeyEvent.VK_ENTER);
