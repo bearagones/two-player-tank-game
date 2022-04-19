@@ -14,6 +14,8 @@ public class HealthPowerUp extends PowerUp {
     public void giveBuff(Tank tank) {
         if ((tank.health *= 3) >= 30) {
             tank.health = 30;
+        } else {
+            tank.health += 10;
         }
     }
 
