@@ -34,8 +34,6 @@ public class Bullet extends GameObject implements Moveable {
         rotation.rotate(Math.toRadians(angle), this.image.getWidth() / 2.0, this.image.getHeight() / 2.0);
         Graphics2D g2d = (Graphics2D) g;
         g2d.drawImage(this.image, rotation, null);
-        g2d.setColor(Color.BLUE);
-        g2d.drawRect(x, y, this.image.getWidth(), this.image.getHeight());
     }
 
     @Override
