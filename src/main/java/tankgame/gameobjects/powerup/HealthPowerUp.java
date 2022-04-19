@@ -9,11 +9,11 @@ public class HealthPowerUp extends PowerUp {
         super(x, y, image);
     }
 
-    // A tank can have a max health of 20
+    // A tank can have a max health of 30
     @Override
     public void giveBuff(Tank tank) {
-        if ((tank.health *= 2) >= 20) {
-            tank.health = 20;
+        if ((tank.health *= 3) >= 30) {
+            tank.health = 30;
         }
     }
 
