@@ -34,7 +34,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>tankgame.Launcher</mainClass>
+                            <mainClass>tankgame.GameLauncher</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
