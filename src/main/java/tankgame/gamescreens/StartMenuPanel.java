@@ -11,8 +11,6 @@ import java.io.IOException;
 public class StartMenuPanel extends JPanel {
 
     private BufferedImage menuBackground;
-    private JButton start;
-    private JButton exit;
     private GameLauncher lf;
 
     public StartMenuPanel(GameLauncher lf) {
@@ -27,7 +25,7 @@ public class StartMenuPanel extends JPanel {
         this.setBackground(Color.BLACK);
         this.setLayout(null);
 
-        start = new JButton("Start");
+        JButton start = new JButton("Start");
         start.setFont(new Font("Courier New", Font.BOLD ,24));
         start.setBounds(150,300,150,50);
         start.addActionListener((actionEvent -> {
@@ -35,7 +33,7 @@ public class StartMenuPanel extends JPanel {
         }));
 
 
-        exit = new JButton("Exit");
+        JButton exit = new JButton("Exit");
         exit.setSize(new Dimension(200,100));
         exit.setFont(new Font("Courier New", Font.BOLD ,24));
         exit.setBounds(150,400,150,50);

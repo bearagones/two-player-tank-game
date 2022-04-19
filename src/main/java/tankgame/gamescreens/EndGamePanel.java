@@ -11,8 +11,6 @@ import java.io.IOException;
 public class EndGamePanel extends JPanel {
 
     private BufferedImage menuBackground;
-    private JButton start;
-    private JButton exit;
     private GameLauncher lf;
 
     public EndGamePanel(GameLauncher lf) {
@@ -27,7 +25,7 @@ public class EndGamePanel extends JPanel {
         this.setBackground(Color.BLACK);
         this.setLayout(null);
 
-        start = new JButton("Restart Game");
+        JButton start = new JButton("Restart Game");
         start.setFont(new Font("Courier New", Font.BOLD ,24));
         start.setBounds(150,300,175,50);
         start.addActionListener((actionEvent -> {
@@ -35,7 +33,7 @@ public class EndGamePanel extends JPanel {
         }));
 
 
-        exit = new JButton("Exit");
+        JButton exit = new JButton("Exit");
         exit.setFont(new Font("Courier New", Font.BOLD ,24));
         exit.setBounds(150,400,175,50);
         exit.addActionListener((actionEvent -> {
