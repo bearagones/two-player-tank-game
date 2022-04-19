@@ -17,11 +17,6 @@ public class GameLauncher {
      */
     private JPanel mainPanel;
     /*
-     * start panel will be used to view the start menu. It will contain
-     * two buttons start and exit.
-     */
-    private JPanel startPanel;
-    /*
      * game panel is used to show our game to the screen. inside this panel
      * also contains the game loop. This is where out objects are updated and
      * redrawn. This panel will execute its game loop on a separate thread.
@@ -30,11 +25,6 @@ public class GameLauncher {
      * called the event dispatch thread.
      */
     private GameLoader gamePanel;
-    /*
-     * end panel is used to show the end game panel.  it will contain
-     * two buttons restart and exit.
-     */
-    private JPanel endPanel;
     /*
      * JFrame used to store our main panel. We will also attach all event
      * listeners to this JFrame.
@@ -55,10 +45,18 @@ public class GameLauncher {
 
     private void initUIComponents(){
         this.mainPanel = new JPanel(); // create a new main panel
-        this.startPanel = new StartMenuPanel(this); // create a new start panel
+        /*
+         * start panel will be used to view the start menu. It will contain
+         * two buttons start and exit.
+         */
+        JPanel startPanel = new StartMenuPanel(this); // create a new start panel
         this.gamePanel = new GameLoader(this); // create a new game panel
         this.gamePanel.gameInitialize(); // initialize game, but DO NOT start game
-        this.endPanel = new EndGamePanel(this); // create a new end game pane;
+        /*
+         * end panel is used to show the end game panel.  it will contain
+         * two buttons restart and exit.
+         */
+        JPanel endPanel = new EndGamePanel(this); // create a new end game pane;
         cl = new CardLayout(); // creating a new CardLayout Panel
         this.jf.setResizable(false); //make the JFrame not resizable
         this.mainPanel.setLayout(cl); // set the layout of the main panel to our card layout
