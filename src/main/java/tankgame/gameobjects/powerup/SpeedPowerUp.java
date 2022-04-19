@@ -9,11 +9,13 @@ public class SpeedPowerUp extends PowerUp {
         super(x, y, image);
     }
 
-    // A tank can have a max speed of 4
+    // A tank can have a max speed of x2
     @Override
     public void giveBuff(Tank tank) {
-        if ((tank.speed *= 2) >= 4) {
-            tank.speed = 4;
+        if ((tank.speed += 1) >= 2) {
+            tank.speed = 2;
+        } else {
+            tank.speed += 1;
         }
     }
 
