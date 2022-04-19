@@ -4,11 +4,10 @@ import java.awt.*;
 
 public interface Collidable {
 
-    public void detectCollision(Collidable object);
+    void detectCollision(Collidable object);
 
-    public boolean hasCollided();
+    boolean hasCollided();
 
-    public Rectangle getHitBox();
+    Rectangle getHitBox();
 
-    public void giveBuff(Tank tank);
 }
