@@ -1,59 +1,132 @@
 package tankgame.gameobjects;
 
 import tankgame.GameConstants;
+import tankgame.GameLoader;
+import tankgame.gameobjects.wall.Wall;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  *
  * @author anthony-pc
  */
-public class Tank extends Player {
+public class Tank extends Player implements Moveable {
 
     private int x;
     private int y;
     private int vx;
     private int vy;
-    private float angle;
+    private int angle;
 
-    private final int R = 2;
-    private final float ROTATIONSPEED = 3.0f;
+    private final int R = 1;
+    private final float ROTATIONSPEED = 2.0f;
 
-    public int armor;
-    public int damage;
-    public int fireRate;
-    public int health;
-    public int speed;
-    public int lives;
+    public int armor, damage, fireRate, health, speed, lives;
 
     public boolean isLoser;
-    public boolean collided;
+
+    private ArrayList<Bullet> bullets = new ArrayList<>();
 
     public Tank(int x, int y, int vx, int vy, int angle, BufferedImage image) {
         super(x, y, image);
         this.vx = vx;
         this.vy = vy;
         this.angle = angle;
+        this.hitBox = new Rectangle(x, y, this.image.getWidth(), this.image.getHeight());
 
         this.armor = 0;
         this.damage = 1;
         this.fireRate = 1;
-        this.health = 20;
+        this.health = 30;
         this.lives = 3;
         this.speed = 1;
         this.isLoser = false;
+    }
+
+    public int getX() {
+        return x;
     }
 
     public void setX(int x) {
         this.x = x;
     }
 
+    public int getY() {
+        return y;
+    }
+
     public void setY(int y) {
         this.y = y;
     }
 
+    private void rotateLeft() {
+        this.angle -= this.ROTATIONSPEED;
+    }
+
+    private void rotateRight() {
+        this.angle += this.ROTATIONSPEED;
+    }
+
+    private void moveForwards() {
+        vx = (int) Math.round(R * Math.cos(Math.toRadians(angle)));
+        vy = (int) Math.round(R * Math.sin(Math.toRadians(angle)));
+        x += vx;
+        y += vy;
+        checkBorder();
+        this.hitBox.setLocation(x, y);
+    }
+
+    private void moveBackwards() {
+        vx = (int) Math.round(R * Math.cos(Math.toRadians(angle)));
+        vy = (int) Math.round(R * Math.sin(Math.toRadians(angle)));
+        x -= vx;
+        y -= vy;
+        checkBorder();
+        this.hitBox.setLocation(x, y);
+    }
+
+    private void shoot() {
+        Bullet b = new Bullet(x, y, angle, GameLoader.bullet);
+        bullets.add(b);
+        shootPressed = false;
+    }
+
+    private void hit() {
+        if (this.health - 10 <= 0) {
+            this.health = 0;
+            death();
+        } else {
+            this.health -= 10;
+        }
+    }
+
+    private void death() {
+        this.lives -= 1;
+        if (this.lives == 0) {
+            this.isLoser = true;
+        } else {
+            this.health = 30;
+        }
+    }
+
+    @Override
+    public void drawImage(Graphics g) {
+        AffineTransform rotation = AffineTransform.getTranslateInstance(x, y);
+        rotation.rotate(Math.toRadians(angle), this.image.getWidth() / 2.0, this.image.getHeight() / 2.0);
+        Graphics2D g2d = (Graphics2D) g;
+        g2d.drawImage(this.image, rotation, null);
+        for (Bullet b : bullets) {
+            b.drawImage(g);
+        }
+        g2d.setColor(Color.BLUE);
+        g2d.drawRect(x, y, this.image.getWidth(), this.image.getHeight());
+    }
+
+    @Override
     public void update() {
         if (this.upPressed) {
             this.moveForwards();
@@ -74,37 +147,19 @@ public class Tank extends Player {
         if (this.shootPressed) {
             this.shoot();
         }
+
+        for (Iterator<Bullet> bulletIterator = bullets.iterator(); bulletIterator.hasNext();) {
+            Bullet bullet = bulletIterator.next();
+            if (bullet.hasCollided()) {
+                bulletIterator.remove();
+            } else {
+                bullet.update();
+            }
+        }
     }
 
-    private void rotateLeft() {
-        this.angle -= this.ROTATIONSPEED;
-    }
-
-    private void rotateRight() {
-        this.angle += this.ROTATIONSPEED;
-    }
-
-    private void moveBackwards() {
-        vx = (int) Math.round(R * Math.cos(Math.toRadians(angle)));
-        vy = (int) Math.round(R * Math.sin(Math.toRadians(angle)));
-        x -= vx;
-        y -= vy;
-        checkBorder();
-    }
-
-    private void moveForwards() {
-        vx = (int) Math.round(R * Math.cos(Math.toRadians(angle)));
-        vy = (int) Math.round(R * Math.sin(Math.toRadians(angle)));
-        x += vx;
-        y += vy;
-        checkBorder();
-    }
-
-    private void shoot() {
-        System.out.println("pew");
-    }
-
-    private void checkBorder() {
+    @Override
+    public void checkBorder() {
         if (x < 30) {
             x = 30;
         }
@@ -120,35 +175,22 @@ public class Tank extends Player {
     }
 
     @Override
-    public void drawImage(Graphics g) {
-        AffineTransform rotation = AffineTransform.getTranslateInstance(x, y);
-        rotation.rotate(Math.toRadians(angle), this.image.getWidth() / 2.0, this.image.getHeight() / 2.0);
-        Graphics2D g2d = (Graphics2D) g;
-        g2d.drawImage(this.image, rotation, null);
-        g2d.setColor(Color.BLUE);
-        g2d.drawRect(x, y, this.image.getWidth(), this.image.getHeight());
-    }
-
-    @Override
     public void detectCollision(Collidable object) {
-        if (object instanceof Bullet) {
-            if (this.getHitBox().intersects(object.getHitBox())) {
+        if ((this.getHitBox().intersects(object.getHitBox()))) {
+            if (object instanceof Bullet) {
+                this.hit();
                 collided = true;
             }
+            if (this.upPressed) {
+                this.moveBackwards();
+            } else if (this.downPressed) {
+                this.moveForwards();
+            }
         }
+        this.bullets.forEach(bullet -> {
+            bullet.detectCollision(object);
+            object.detectCollision(bullet);
+        });
     }
 
-    @Override
-    public boolean hasCollided() {
-        return collided;
-    }
-
-    @Override
-    public Rectangle getHitBox() {
-        return hitBox.getBounds();
-    }
-
-    @Override
-    public void giveBuff(Tank tank) {
-    }
 }
