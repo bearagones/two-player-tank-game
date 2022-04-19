@@ -1,6 +1,5 @@
 package tankgame.gameobjects.wall;
 
-import tankgame.gameobjects.Tank;
 import java.awt.image.BufferedImage;
 
 public class UnbreakableWall extends Wall {
@@ -10,12 +9,8 @@ public class UnbreakableWall extends Wall {
     }
 
     @Override
-    public void destroyWall(boolean collided) {
-
+    public boolean isBreakable() {
+        return false;
     }
 
-    @Override
-    public void giveBuff(Tank tank) {
-
-    }
 }
