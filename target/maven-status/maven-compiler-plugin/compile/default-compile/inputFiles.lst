@@ -3,7 +3,6 @@
 /Users/bumblebea/csc413-tankgame-bearagones/src/main/java/tankgame/gameobjects/powerup/HealthPowerUp.java
 /Users/bumblebea/csc413-tankgame-bearagones/src/main/java/tankgame/gamescreens/EndGamePanel.java
 /Users/bumblebea/csc413-tankgame-bearagones/src/main/java/tankgame/GameLoader.java
-/Users/bumblebea/csc413-tankgame-bearagones/src/main/java/tankgame/gameobjects/powerup/CriticalDamagePowerUp.java
 /Users/bumblebea/csc413-tankgame-bearagones/src/main/java/tankgame/gameobjects/powerup/SpeedPowerUp.java
 /Users/bumblebea/csc413-tankgame-bearagones/src/main/java/tankgame/gameobjects/Moveable.java
 /Users/bumblebea/csc413-tankgame-bearagones/src/main/java/tankgame/gameobjects/Player.java
@@ -11,7 +10,6 @@
 /Users/bumblebea/csc413-tankgame-bearagones/src/main/java/tankgame/gameobjects/Tank.java
 /Users/bumblebea/csc413-tankgame-bearagones/src/main/java/tankgame/gameobjects/Collidable.java
 /Users/bumblebea/csc413-tankgame-bearagones/src/main/java/tankgame/GameConstants.java
-/Users/bumblebea/csc413-tankgame-bearagones/src/main/java/tankgame/gameobjects/powerup/FireRatePowerUp.java
 /Users/bumblebea/csc413-tankgame-bearagones/src/main/java/tankgame/gameobjects/powerup/PowerUp.java
 /Users/bumblebea/csc413-tankgame-bearagones/src/main/java/tankgame/GameLauncher.java
 /Users/bumblebea/csc413-tankgame-bearagones/src/main/java/tankgame/gameobjects/wall/BreakableWall.java

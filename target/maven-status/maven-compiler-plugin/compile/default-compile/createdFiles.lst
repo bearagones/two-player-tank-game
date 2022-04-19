@@ -4,12 +4,10 @@ tankgame/gamescreens/EndGamePanel.class
 tankgame/gamescreens/StartMenuPanel.class
 tankgame/GameConstants.class
 tankgame/gameobjects/wall/BreakableWall.class
-tankgame/gameobjects/powerup/CriticalDamagePowerUp.class
 tankgame/gameobjects/Moveable.class
 tankgame/gameobjects/wall/UnbreakableWall.class
 tankgame/gameobjects/wall/Wall.class
 tankgame/gameobjects/powerup/ArmorPowerUp.class
-tankgame/gameobjects/powerup/FireRatePowerUp.class
 tankgame/GameControl.class
 tankgame/gameobjects/Tank.class
 tankgame/gameobjects/GameObject.class
