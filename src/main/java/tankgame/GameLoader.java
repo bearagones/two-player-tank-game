@@ -88,10 +88,10 @@ public class GameLoader extends JPanel implements Runnable {
      * Reset game to its initial state.
      */
     public void resetGame() {
-        this.tank1.setX(100);
-        this.tank1.setY(GameConstants.GAME_SCREEN_HEIGHT / 2);
+        this.tank1.setX(50);
+        this.tank1.setY(50);
         this.tank2.setX(GameConstants.GAME_SCREEN_WIDTH - 100);
-        this.tank2.setY(GameConstants.GAME_SCREEN_HEIGHT / 2);
+        this.tank2.setY(GameConstants.GAME_SCREEN_HEIGHT - 100);
     }
 
     /**
@@ -179,8 +179,8 @@ public class GameLoader extends JPanel implements Runnable {
         }
 
         //Spawning the tanks
-        tank1 = new Tank(300, 300, 0, 0, 0, t1img);
-        tank2 = new Tank(350, 350, 0, 0, 180, t2img);
+        tank1 = new Tank(200, 200, 0, 0, 90, t1img);
+        tank2 = new Tank(GameConstants.GAME_SCREEN_WIDTH - 100, GameConstants.GAME_SCREEN_HEIGHT - 100, 0, 0, 270, t2img);
 
         //Setting the game controls for the tanks
         GameControl tankControl1 = new GameControl(tank1, KeyEvent.VK_UP, KeyEvent.VK_DOWN, KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT, KeyEvent.VK_ENTER);
@@ -228,6 +228,7 @@ public class GameLoader extends JPanel implements Runnable {
             object.detectCollision(powerup);
             powerup.detectCollision(object);
             if (powerup.hasCollided()) {
+                powerup.giveBuff((Tank) object);
                 powerUpIterator.remove();
             }
         }
