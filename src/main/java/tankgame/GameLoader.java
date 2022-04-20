@@ -39,7 +39,6 @@ public class GameLoader extends JPanel implements Runnable {
     private Tank tank2;
     private final GameLauncher lf;
     private BufferedImage background = null;
-
     private ArrayList<Wall> walls;
     private ArrayList<PowerUp> powerups;
 
