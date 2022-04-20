@@ -174,8 +174,9 @@ public class GameLoader extends JPanel implements Runnable {
         this.tank2 = new Tank(GameConstants.GAME_SCREEN_WIDTH - 100, GameConstants.GAME_SCREEN_HEIGHT - 100, 0, 0, 270, t2img);
 
         //Setting the game controls for the tanks
-        GameControl tankControl1 = new GameControl(tank1, KeyEvent.VK_UP, KeyEvent.VK_DOWN, KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT, KeyEvent.VK_ENTER);
-        GameControl tankControl2 = new GameControl(tank2, KeyEvent.VK_W, KeyEvent.VK_S, KeyEvent.VK_A, KeyEvent.VK_D, KeyEvent.VK_CONTROL);
+        GameControl tankControl1 = new GameControl(tank1, KeyEvent.VK_W, KeyEvent.VK_S, KeyEvent.VK_A, KeyEvent.VK_D, KeyEvent.VK_CONTROL);
+        GameControl tankControl2 = new GameControl(tank2, KeyEvent.VK_UP, KeyEvent.VK_DOWN, KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT, KeyEvent.VK_ENTER);
+
 
         //Adding a key listener for the tank controls
         this.lf.getJf().addKeyListener(tankControl1);
