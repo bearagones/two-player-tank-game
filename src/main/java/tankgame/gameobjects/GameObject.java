@@ -39,4 +39,5 @@ public abstract class GameObject implements Collidable {
             collided = true;
         }
     }
+
 }
