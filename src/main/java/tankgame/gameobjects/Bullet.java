@@ -1,6 +1,7 @@
 package tankgame.gameobjects;
 
 import tankgame.GameConstants;
+import tankgame.gameobjects.powerup.PowerUp;
 import tankgame.gameobjects.wall.Wall;
 
 import java.awt.*;
