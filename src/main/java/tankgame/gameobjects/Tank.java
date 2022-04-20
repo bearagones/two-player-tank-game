@@ -21,14 +21,10 @@ public class Tank extends Player implements Moveable {
     private int vx;
     private int vy;
     private int angle;
-
     private final float ROTATIONSPEED = 2.0f;
-
     public int armor, health, lives;
     public double speed;
-
     public boolean hasDied;
-
     private final ArrayList<Bullet> bullets = new ArrayList<>();
 
     public Tank(int x, int y, int vx, int vy, int angle, BufferedImage image) {
