@@ -24,7 +24,8 @@ public class Tank extends Player implements Moveable {
 
     private final float ROTATIONSPEED = 2.0f;
 
-    public int armor, health, speed, lives;
+    public int armor, health, lives;
+    public double speed;
 
     public boolean hasDied;
 
@@ -39,7 +40,7 @@ public class Tank extends Player implements Moveable {
 
         this.armor = 0;
         this.health = 30;
-        this.speed = 1;
+        this.speed = 1.0;
         this.lives = 3;
     }
 
@@ -57,6 +58,10 @@ public class Tank extends Player implements Moveable {
 
     public void setY(int y) {
         this.y = y;
+    }
+
+    public void setAngle(int angle) {
+        this.angle = angle;
     }
 
     private void rotateLeft() {
@@ -182,13 +187,15 @@ public class Tank extends Player implements Moveable {
                 collided = true;
             }
 
-            if (this.upPressed) {
-                this.moveBackwards();
-            } else if (this.downPressed) {
-                this.moveForwards();
+            if (!(object instanceof PowerUp)) {
+                if (this.upPressed) {
+                    this.moveBackwards();
+                } else if (this.downPressed) {
+                    this.moveForwards();
+                }
             }
-
         }
+
         this.bullets.forEach(bullet -> {
             bullet.detectCollision(object);
             object.detectCollision(bullet);
