@@ -136,7 +136,7 @@ public class Tank extends Player implements Moveable {
             this.rotateRight();
         }
 
-        if (this.shootPressed) {
+        if (this.shootPressed && GameLoader.tickCount % 35 == 0) {
             this.shoot();
         }
 
