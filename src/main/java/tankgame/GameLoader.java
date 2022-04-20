@@ -42,7 +42,6 @@ public class GameLoader extends JPanel implements Runnable {
 
     private ArrayList<Wall> walls;
     private ArrayList<PowerUp> powerups;
-    private HashMap<String, BufferedImage> gameObjects;
 
     public GameLoader(GameLauncher lf) {
         this.lf = lf;
@@ -53,36 +52,10 @@ public class GameLoader extends JPanel implements Runnable {
         try {
             this.resetGame();
             while (!gameOver) {
-                this.tank1.update();
-                this.tank2.update();
-
-                this.tank1.detectCollision(tank2);
-                this.tank2.detectCollision(tank1);
-
-                this.handleCollision(tank1);
-                this.handleCollision(tank2);
-
-                if (this.tank1.hasDied) {
-                    tank1.setX(50);
-                    tank1.setY(50);
-                }
-
-                if (this.tank2.hasDied) {
-                    tank2.setX(GameConstants.GAME_SCREEN_WIDTH - 100);
-                    tank2.setY(GameConstants.GAME_SCREEN_HEIGHT - 100);
-                }
-
-                if (tank1.lives == 0 || tank2.lives == 0) {
-                    gameOver = true;
-                }
-
+                this.update();
                 this.repaint();
 
-                Thread.sleep(1000 / 144); //sleep for a few milliseconds
-                /*
-                 * simulate an end game event
-                 * we will do this with by ending the game when drawn 2000 frames have been drawn
-                 */
+                Thread.sleep(1000 / 144);
             }
             this.lf.setFrame("end");
         } catch (InterruptedException ignored) {
@@ -90,9 +63,33 @@ public class GameLoader extends JPanel implements Runnable {
         }
     }
 
-    /**
-     * Reset game to its initial state.
-     */
+    private void update() {
+        this.tank1.update();
+        this.tank2.update();
+
+        this.tank1.detectCollision(tank2);
+        this.tank2.detectCollision(tank1);
+
+        this.handleCollision(tank1);
+        this.handleCollision(tank2);
+
+        if (this.tank1.hasDied) {
+            tank1.setX(50);
+            tank1.setY(50);
+            tank1.setAngle(90);
+        }
+
+        if (this.tank2.hasDied) {
+            tank2.setX(GameConstants.GAME_SCREEN_WIDTH - 100);
+            tank2.setY(GameConstants.GAME_SCREEN_HEIGHT - 100);
+            tank2.setAngle(270);
+        }
+
+        if (tank1.lives == 0 || tank2.lives == 0) {
+            gameOver = true;
+        }
+    }
+
     public void resetGame() {
         this.tank1.setX(50);
         this.tank1.setY(50);
@@ -100,18 +97,13 @@ public class GameLoader extends JPanel implements Runnable {
         this.tank2.setY(GameConstants.GAME_SCREEN_HEIGHT - 100);
     }
 
-    /**
-     * Load all resources for tankgame.gameobjects.Tank Wars Game. Set all Game Objects to their
-     * initial state as well.
-     */
     public void gameInitialize() {
 
         BufferedImage t1img = null;
         BufferedImage t2img = null;
-
         walls = new ArrayList<>();
         powerups = new ArrayList<>();
-        gameObjects = new HashMap<>();
+        HashMap<String, BufferedImage> gameObjects = new HashMap<>();
 
         this.world = new BufferedImage(GameConstants.GAME_SCREEN_WIDTH,
                 GameConstants.GAME_SCREEN_HEIGHT+100,
@@ -133,6 +125,7 @@ public class GameLoader extends JPanel implements Runnable {
             gameObjects.put("health powerup", read(Objects.requireNonNull(GameLoader.class.getClassLoader().getResource("PowerUpSprites/Health.png"))));
             gameObjects.put("speed powerup", read(Objects.requireNonNull(GameLoader.class.getClassLoader().getResource("PowerUpSprites/Speed.png"))));
 
+            //Converting map to spawn the game objects
             InputStreamReader isr = new InputStreamReader(Objects.requireNonNull(GameLoader.class.getClassLoader().getResourceAsStream("maps/map1.csv")));
             BufferedReader mapReader = new BufferedReader(isr);
             String row = mapReader.readLine();
@@ -212,6 +205,8 @@ public class GameLoader extends JPanel implements Runnable {
     }
 
     private void handleCollision(Collidable object) {
+
+        //Handling wall collisions on map
         for (Iterator<Wall> wallIterator = walls.iterator(); wallIterator.hasNext();) {
             Wall wall = wallIterator.next();
             object.detectCollision(wall);
@@ -221,6 +216,7 @@ public class GameLoader extends JPanel implements Runnable {
             }
         }
 
+        //Handling powerup collisions on map
         for (Iterator<PowerUp> powerUpIterator = powerups.iterator(); powerUpIterator.hasNext();) {
             PowerUp powerup = powerUpIterator.next();
             object.detectCollision(powerup);
