@@ -12,8 +12,6 @@ src folder is to be used to store source code only.
 ## resources Folder Purpose 
 resources folder is to be used to store the resources for your project only. This includes images, sounds, map text files, etc.
 
-`The src and resources folders can be deleted if you want a different file structure`
-
 ## jar Folder Purpose 
 The jar folder is to be used to store the built jar of your term-project.
 
@@ -23,15 +21,15 @@ The jar folder is to be used to store the built jar of your term-project.
 
 # Required Information when Submitting tankgame.gameobjects.Tank Game
 
-## Version of Java Used:
+## Version of Java Used: Version 14.0.2
 
-## IDE used: 
+## IDE used: Intellij IDEA 2021.2.1 
 
 ## Steps to Import project into IDE:
 
 ## Steps to Build your Project:
  
-## Steps to run your Project:
+## Steps to run your Project: 
 
 ## Controls to play your Game:
 
