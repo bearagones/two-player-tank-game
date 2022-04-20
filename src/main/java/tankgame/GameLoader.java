@@ -34,13 +34,14 @@ public class GameLoader extends JPanel implements Runnable {
 
     private static boolean gameOver = false;
     private BufferedImage world;
-    public static BufferedImage bullet;
     private Tank tank1;
     private Tank tank2;
     private final GameLauncher lf;
     private BufferedImage background = null;
     private ArrayList<Wall> walls;
     private ArrayList<PowerUp> powerups;
+    public static BufferedImage bullet;
+    public static long tickCount;
 
     public GameLoader(GameLauncher lf) {
         this.lf = lf;
@@ -53,7 +54,7 @@ public class GameLoader extends JPanel implements Runnable {
             while (!gameOver) {
                 this.update();
                 this.repaint();
-
+                tickCount++;
                 Thread.sleep(1000 / 144);
             }
             this.lf.setFrame("end");
@@ -76,12 +77,14 @@ public class GameLoader extends JPanel implements Runnable {
             tank1.setX(50);
             tank1.setY(50);
             tank1.setAngle(90);
+            tank1.hasDied = false;
         }
 
         if (this.tank2.hasDied) {
             tank2.setX(GameConstants.GAME_SCREEN_WIDTH - 100);
             tank2.setY(GameConstants.GAME_SCREEN_HEIGHT - 100);
             tank2.setAngle(270);
+            tank2.hasDied = false;
         }
 
         if (tank1.lives == 0 || tank2.lives == 0) {
