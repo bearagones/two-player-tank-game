@@ -38,7 +38,7 @@ public class GameLauncher {
 
     public GameLauncher(){
         this.jf = new JFrame();             // creating a new JFrame object
-        this.jf.setTitle("tankgame.gameobjects.Tank Wars Game"); // setting the title of the JFrame window.
+        this.jf.setTitle("Tank Wars Game"); // setting the title of the JFrame window.
         this.jf.setLocationRelativeTo(null); // this will open the window in the center of the screen.
         this.jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // when the GUI is closed, this will also shutdown the VM
     }
