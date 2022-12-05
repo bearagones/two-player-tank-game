@@ -1,25 +1,8 @@
-# csc413-tankgame
+# Two Player Tank Game
 
+## Description
 
-| Student Information |                |
-|:-------------------:|----------------|
-|  Student Name       |   Beatrice Aragones    |
-|  Student Email      |   baragones@mail.sfsu.edu   |
-
-## src Folder Purpose 
-src folder is to be used to store source code only.
-
-## resources Folder Purpose 
-resources folder is to be used to store the resources for your project only. This includes images, sounds, map text files, etc.
-
-## jar Folder Purpose 
-The jar folder is to be used to store the built jar of your term-project.
-
-`NO SOURCE CODE SHOULD BE IN THIS FOLDER. DOING SO WILL CAUSE POINTS TO BE DEDUCTED`
-
-`THIS FOLDER CAN NOT BE DELETED OR MOVED`
-
-# Required Information when Submitting Tank Game
+This is a tank game that can be played by two players on the same keyboard.
 
 ## Version of Java Used: Version 14.0.2
 
@@ -51,5 +34,3 @@ The jar folder is to be used to store the built jar of your term-project.
 |  Rotate left  |     A     |     LEFT     |
 |  Rotate Right |     D     |     RIGHT     |
 |  Shoot        |     LEFT CTRL     |     ENTER     |
-
-<!-- you may add more controls if you need to. -->
